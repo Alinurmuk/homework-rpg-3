@@ -29,3 +29,14 @@ public final class BattleEngine {
 - Public constructor
 - `getInstance()` returning a new object each time
 - Storing game state in multiple places
+
+
+
+
+
+
+
+
+
+
+

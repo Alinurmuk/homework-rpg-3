@@ -31,3 +31,13 @@ public class HeroCombatantAdapter implements Combatant {
 ## Common Mistakes
 - Letting `BattleEngine` call Hero or Enemy methods directly
 - Returning null from adapter methods
+
+
+
+
+
+
+
+
+
+
