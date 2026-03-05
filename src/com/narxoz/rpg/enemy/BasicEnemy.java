@@ -23,19 +23,12 @@ public class BasicEnemy implements Enemy {
 
     @Override
     public void applyDamage(int amount) {
-        // TODO: enforce min 0
         health -= amount;
-        if (health < 0) {
-            health = 0;
-        }
+        if (health < 0) health = 0;
     }
 
     @Override
     public boolean isDefeated() {
         return health <= 0;
-    }
-
-    public int getHealth() {
-        return health;
     }
 }
