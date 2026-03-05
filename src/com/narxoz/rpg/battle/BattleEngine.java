@@ -2,6 +2,7 @@ package com.narxoz.rpg.battle;
 
 import java.util.List;
 import java.util.Random;
+import java.util.ArrayList;
 
 public final class BattleEngine {
     private static BattleEngine instance;
@@ -23,16 +24,42 @@ public final class BattleEngine {
     }
 
     public void reset() {
-        // TODO: reset any battle state if you add it
     }
 
     public EncounterResult runEncounter(List<Combatant> teamA, List<Combatant> teamB) {
-        // TODO: validate inputs and run round-based battle
-        // TODO: use random if you add critical hits or target selection
         EncounterResult result = new EncounterResult();
-        result.setWinner("TBD");
-        result.setRounds(0);
-        result.addLog("TODO: implement battle simulation");
+        int roundCount = 0;
+
+        while (!teamA.isEmpty() && !teamB.isEmpty()) {
+            roundCount++;
+            result.addLog("--- Round " + roundCount + " ---");
+
+            performAttack(teamA, teamB, result);
+            if (teamB.isEmpty()) break;
+
+            performAttack(teamB, teamA, result);
+        }
+
+        result.setRounds(roundCount);
+        result.setWinner(teamA.isEmpty() ? "Team B" : "Team A");
+        result.addLog("Winner: " + result.getWinner());
         return result;
+    }
+
+    private void performAttack(List<Combatant> attackers, List<Combatant> defenders, EncounterResult result) {
+        for (Combatant attacker : new ArrayList<>(attackers)) {
+            if (defenders.isEmpty()) break;
+            
+            Combatant target = defenders.get(0);
+            int damage = attacker.getAttackPower();
+            target.takeDamage(damage);
+            
+            result.addLog(attacker.getName() + " attacks " + target.getName() + " for " + damage);
+
+            if (!target.isAlive()) {
+                result.addLog(target.getName() + " defeated!");
+                defenders.remove(0);
+            }
+        }
     }
 }
